@@ -1,0 +1,75 @@
+# Key 파일
+src/main/resources/oracleCloud/Wallet_lohp/
+*.pem
+
+
+src/main/resources/application.properties
+
+
+/.metadata/
+
+
+## git
+.git/
+
+
+## macOS
+.DS_Store
+
+
+_DOC/
+test/
+META-INF/
+log4sql*
+!**/src/main/
+!**/src/test/
+
+
+## STS
+.apt_generated
+.factorypath
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+
+## gradle
+.gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+
+## maven
+target/
+
+
+## Eclipse
+.settings/
+.classpath
+.project
+
+
+## IntelliJ
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+
+## Node
+node_modules/
+
+
+## VS Code
+.vscode/
+
+
+

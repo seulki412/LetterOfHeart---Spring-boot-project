@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+
+<!-- CSS only -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+	crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+	crossorigin="anonymous"></script>
+
+<!-- <script src="/js/tree/myTree.js"></script> -->
+
+<style>
+a:link {
+	color: white;
+	text-decoration: none;
+}
+
+a:visited {
+	color: white;
+	text-decoration: none;
+}
+
+a:hover {
+	color: white;
+	text-decoration: none;
+}
+
+/*실험*/
+.background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 1000;
+	/* 숨기기 */
+	z-index: -1;
+	opacity: 0;
+}
+
+img {
+	border: none;
+}
+
+.show {
+	opacity: 1;
+	z-index: 1000;
+	transition: all 0.5s;
+}
+
+.popup {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #ffffff;
+	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.3);
+	/* 임시 지정 */
+	width: 100px;
+	height: 100px;
+	/* 초기에 약간 아래에 배치 */
+	transform: translate(-50%, -40%);
+}
+
+.show .popup {
+	transform: translate(-50%, -50%);
+	transition: all 0.5s;
+}
+/*실험*/
+html, body {
+	margin: 0;
+	height: 100%;
+	overflow: hidden;
+}
+
+#container {
+	width: 100%;
+	height: 100%;
+	background-color: black;
+}
+
+@media ( max-width :300px ) {
+	#contents {
+		width: 250px;
+		height: 500px;
+		/*border: 1px solid black;*/
+		margin: 0 auto;
+	}
+	.window {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		margin: 0 auto;
+	}
+}
+
+@media ( min-width :300px ) and ( max-width:500px ) {
+	#contents {
+		width: 300px;
+		height: 550px;
+		/*border: 1px solid black;*/
+		margin: 0 auto;
+	}
+	.window {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		margin: 0 auto;
+	}
+}
+
+@media ( min-width :500px ) {
+	#contents {
+		width: 600px;
+		height: 900px;
+		/*border: 1px solid black;*/
+		margin: 0 auto;
+	}
+	.window {
+		position: relative;
+		width: 50%;
+		height: 100%;
+		margin: 0 auto;
+	}
+}
+
+#treeImg {
+	width: 100%;
+	height: 90%;
+	border: 1px solid black;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+}
+
+#top {
+	width: 30%;
+	height: 25%;
+	/*border: 1px solid white;*/
+	margin: 0 auto;
+	margin-top: 30%;
+}
+
+#middle {
+	width: 60%;
+	height: 25%;
+	/*border: 1px solid white;*/
+	margin: 0 auto;
+	display: flex;
+}
+
+#bottom {
+	width: 90%;
+	height: 25%;
+	/*border: 1px solid white;*/
+	margin: 0 auto;
+	display: flex;
+}
+
+.letters {
+	
+}
+
+.top {
+	width: 90%;
+	height: 90%;
+	/*border: 5px solid black;*/
+	margin: 0 auto;
+}
+
+.middle {
+	width: 40%;
+	height: 50%;
+	display: block;
+	/*border: 5px solid black;*/
+	margin: 0 auto;
+}
+
+.bottom {
+	width: 25%;
+	height: 90%;
+	/*border: 5px solid black;*/
+	margin: 0 auto;
+}
+/*
+        #letterArea{
+            width: 100%;
+            height: 30%;
+            
+        }
+        */
+#letterAreaInnerTextArea {
+	width: 100%;
+	height: 100%;
+}
+
+#modalBtnDiv {
+	width: 100%;
+	height: 10%;
+	border-radius: 20px;
+	text-align: center;
+}
+
+#show {
+	width: 100%;
+	background-color: green;
+	border-radius: 20px;
+}
+
+.popup {
+	width: 100%;
+	height: 70%;
+}
+
+#twoBtns {
+	width: 100%;
+	height: 100%;
+	border: 5px dotted green;
+}
+
+.twoBtnsInnerBtn {
+	display: block;
+	width: 100%;
+	height: 20%;
+	background-color: green;
+	margin-top: 20px;
+	color: white;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+#popupDeco {
+	width: 100%;
+	height: 50%;
+	margin-top: 5px;
+	background-color: brown;
+}
+
+#popupDeco img {
+	width: 100%;
+	height: 100%;
+}
+/*
+            눈실험
+        */
+
+/*         수정 */
+#content {
+	width: 100%;
+	height: 100%;
+	border-radius: 20px;
+}
+
+.formInnerEle {
+	display: block;
+}
+
+#writeLetterForm {
+	width: 90%;
+	height: 0%;
+	margin: 0 auto;
+	margin-top: 10px;
+	visibility: hidden;
+	transition: all 0.2s;
+}
+
+.act {
+	visibility: visible !important;
+	height: 65% !important;
+}
+
+.formInnerEle.textarea {
+	width: 100%;
+	height: 100%;
+	margin-top: 10px;
+}
+/*         수정 */
+.formInnerEle.textarea #titleNickname {
+	width: 100%;
+	height: 100%;
+}
+
+#sendLetterBtn {
+	width: 100%;
+	background-color: green;
+	border-radius: 20px;
+	color: white;
+}
+
+#close {
+	all: unset;
+	color: white;
+	font-size: 30px;
+}
+
+.lettersImg {
+	width: 90%;
+	height: 90%;
+	margin-top: 10px;
+	margin-right: 120px;
+}
+
+#writeLetterBtn {
+	margin-top: 0px;
+}
+</style>
+</head>
+<body>
+	<script
+		src="https://tistory3.daumcdn.net/tistory/941717/skin/images/jquery.min.js"
+		type="text/javascript"></script>
+	<script
+		src="https://tistory3.daumcdn.net/tistory/941717/skin/images/snowfall.jquery.js"
+		type="text/javascript"></script>
+
+	<div id="container">
+
+		<!--
+            눈실험
+        -->
+
+		<!--
+            눈실험
+        -->
+
+
+
+
+		<table style="position: absolute" class="table">
+			<thead>
+				<tr style="color: white;">
+					<th>작성자</th>
+					<th>메세지</th>
+				</tr>
+			</thead>
+			<tbody style="color: white;" id="msgTbody">
+				<p th:text="${msgCnt}" style="opacity: 0; color: white;"></p>
+				<tr th:each="page:${pages}">
+					<td th:text="${page.titleNickname}"></td>
+					<td th:text="${page.content}"></td>
+				</tr>
+			</tbody>
+
+			<div>
+				<!--  <a style="position:absolute ;background-color:white ;  top:50% ; left: 10% ; " th:href="|?page=${previous}|" role="button">이전</a>-->
+				<a
+					id="goPre" style="position: absolute; background-color: black; font-weight: bold; font-size: 40px; top: 50%; left: 10%;"
+					th:href="|?page=${previous}|" role="button"> < </a> 
+				<a
+					id="goNext" style="position: absolute; background-color: black; font-weight: bold; font-size: 40px; top: 50%; left: 90%;"
+					th:href="|?page=${next}|" role="button"> > </a>
+			</div>
+		</table>
+
+		<div id="contents">
+			<div id="treeImg" th:style="|background-image: url(/resources/images/tree${treeDesign}.png)|">
+				<div id="top">
+					<div class="letters top" onclick="openLetter(this)">
+						<p style="color: white;">하fawdfawwafa</p>
+						<img class="lettersImg" onError="this.style.visibility='hidden'" />
+						<input type="hidden" id="title" /> <input type="hidden"
+							id="content" />
+					</div>
+					<!--letters top 끝-->
+				</div>
+				<!--  top 끝   -->
+				<div id="middle">
+					<div class="letters middle" onclick="openLetter(this)">
+						<p style="color: white;">하fawdfawwafa</p>
+						<img class="lettersImg" style="height:100% !important" onError="this.style.visibility='hidden'" />
+						<input type="hidden" id="title" /> <input type="hidden"
+							id="content" />
+					</div>
+					<!-- letters middle 끝 -->
+					<div class="letters middle" onclick="openLetter(this)">
+						<p style="color: white;">하fawdfawwafa</p>
+						<img class="lettersImg" style="height:100% !important" onError="this.style.visibility='hidden'" />
+						<input type="hidden" id="title" /> <input type="hidden"
+							id="content" />
+					</div>
+				</div>
+				<!-- middle 끝  -->
+				<div id="bottom">
+					<div class="letters bottom" onclick="openLetter(this)">
+						<p style="color: white;">하fawdfawwafa</p>
+						<img class="lettersImg" onError="this.style.visibility='hidden'" />
+						<input type="hidden" id="title" /> <input type="hidden"
+							id="content" />
+					</div>
+					<div class="letters bottom" onclick="openLetter(this)">
+						<p style="color: white;">하fawdfawwafa</p>
+						<img class="lettersImg" onError="this.style.visibility='hidden'" />
+						<input type="hidden" id="title" /> <input type="hidden"
+							id="content" />
+					</div>
+					<div class="letters bottom" onclick="openLetter(this)">
+						<p style="color: white;">하fawdfawwafa</p>
+						<img class="lettersImg" onError="this.style.visibility='hidden'" />
+						<input type="hidden" id="title" /> <input type="hidden"
+							id="content" />
+					</div>
+				</div>
+				<!--  bottom 끝   -->
+				<!--top middle bottom 끝-->
+			</div>
+			<!--treeImg 끝-->
+
+			<!--
+            <div id="letterArea">
+                <textarea id="letterAreaInnerTextArea">
+
+                </textarea>
+            </div>
+            -->
+			<!-- letterArea 끝 -->
+			<div id="modalLetterPaper" style="display: none;">
+				<input type="text"
+					style="width: 90%; border: 3px dashed green; text-align: center; border-radius: 20px; margin-top: 10px auto;">
+				<textarea
+					style="width: 90%; border: 3px solid green; height: 80%; margin-top: 10px auto; border-radius: 20px;"></textarea>
+				<button onclick="closeModalLetterPaper(this)"
+					style="all: unset; width: 100%; color: white; background-color: red; font-weight: bold; font-size: 20px; text-align: center; border-radius: 10px;">닫기</button>
+			</div>
+
+
+			<div id="modalBtnDiv">
+				<button id="show">
+					<img src="/resources/images/santa-claus.png" />
+				</button>
+			</div>
+			<!--실험-->
+			<div class="background">
+				<div class="window">
+					<div class="popup">
+						<div id="twoBtns">
+							<button class="twoBtnsInnerBtn" id="writeLetterBtn" type="button"
+								onclick="openWriteLetterPaper();">편지쓰기</button>
+
+							<form id="writeLetterForm" action="/message/write" method="post"
+								name="writeLetterForm">
+								<label class="formInnerEle">작성자 : <input
+									id="titleNickname" type="text" name="titleNickname"
+									placeholder="닉네임은 2자 이상, 8자 이하로 입력해주세요." />
+								</label> <label class="formInnerEle textarea"><textarea
+										id="content" name="content"
+										placeholder="편지 내용은 10자 이상, 200자 이하로 작성해주세요."></textarea> </label> <label
+									class="formInnerEle"><input id="sendLetterBtn"
+									type="button" value="전송" onclick="send()" /></label> <input
+									type="hidden" th:value="${id}" id="id" name="id">
+							</form>
+							<!--  여기작업중  -->
+							<!-- 임시 트리디자인 버튼 -->
+							<div style="height: 20%;" id="goDesignTreeBtn">
+								<button
+									style="all: unset; width: 100%; height: 100%; background-color: green; text-align: center; color: white; font-weight: bolder;"
+									th:onclick="|location.href='@{/{id}/edit(id=${id})}'|">트리꾸미기</button>
+							</div>
+
+							<form action="/users/logout" method="post">
+								<!-- 								 <button id="logoutBtn" type="button">로그아웃</button> -->
+								<input class="twoBtnsInnerBtn logOutBtnAndPopupDecoImg"
+									id="logoutBtn" type="submit" th:value="로그아웃" />
+
+							</form>
+
+							<div id="popupDeco">
+								<img
+									src="https://cdn.dribbble.com/users/1410984/screenshots/3176480/media/1b6cc71a194ad348c816cae00bcedcaf.gif" />
+							</div>
+							<!-- popupDeco 끝 -->
+						</div>
+						<!-- twoBtns 끝 -->
+						<button id="close">X</button>
+						<!--close 끝-->
+					</div>
+					<!--popup 끝-->
+					<div>
+						<div></div>
+					</div>
+				</div>
+				<!-- window 끝 -->
+			</div>
+			<!--실험 background 끝-->
+			<!--modalBtn 끝-->
+		</div>
+		<!--contents 끝-->
+	</div>
+
+	<script>
+		var check = false;
+	
+		function send() {
+			var form = document.writeLetterForm;
+	
+			if (!form.titleNickname.value) {
+				alert("작성자 닉네임을 작성해주세요.");
+				form.titleNickname.focus();
+				return;
+			}
+	
+			if (form.titleNickname.value.length < 2 || form.titleNickname.value.length > 8) {
+				alert("닉네임은 2자 이상, 8자 이하로 입력해주세요.");
+				form.titleNickname.focus();
+				return false;
+			} else {
+				check = true;
+			}
+	
+			if (!form.titleNickname.value || !check) {
+				alert("닉네임을 확인해주세요");
+				form.titleNickname.focus();
+				return;
+			}
+	
+			if (!form.content.value) {
+				alert("편지 내용을 작성해주세요.");
+				form.content.focus();
+				return;
+			}
+			
+			if (form.content.value.length < 5 || form.content.value.length > 500) {
+				alert("편지 내용은 5자 이상, 500자 이하로 작성해주세요.");
+				form.content.focus();
+				return false;
+			} else {
+				check = true;
+			}
+	
+			form.submit();
+		}
+	</script>
+	<script>
+         
+        let Flag = false;
+
+        function show() {
+          document.querySelector(".background").className = "background show";
+        }
+  
+        function close() {
+          document.querySelector(".background").className = "background";
+        }
+        /**
+         * new Window에서 편지 쓰는 페이지 여는 함수
+         * 
+        */
+        function openWriteLetterPaper(){
+            document.getElementById("writeLetterForm").classList.toggle('act');
+            const logoutBtn = document.getElementById("logoutBtn");
+            const popupDeco = document.getElementById("popupDeco");
+            const goDesignTreeBtn = document.getElementById("goDesignTreeBtn");
+            
+            const formEleArr = document.getElementsByClassName("formInnerEle");
+			
+            if(!Flag){
+                Array.from(formEleArr).forEach(item=>{
+                    item.style.opacity = 1;
+                })
+                logoutBtn.style.display = "none";
+                popupDeco.style.display = "none";
+                goDesignTreeBtn.style.display = "none";
+                Flag = true;
+            } else {
+                Array.from(formEleArr).forEach(item=>{
+                    item.style.opacity = 0;
+                })
+                logoutBtn.style.display = "block";
+                popupDeco.style.display = "block";
+                goDesignTreeBtn.style.display = "block";
+                Flag = false;
+            }
+        }
+
+        document.querySelector("#show").addEventListener("click", show);
+        document.querySelector("#close").addEventListener("click", close);
+        $(document).ready(function(){
+            $(document).snowfall({deviceorientation : true, round : true, minSize: 1, maxSize:8,  flakeCount : 250});
+        });
+        // 회원가입 폼으로 돌아가기
+        function random(min, max) {
+ 		   return Math.floor(Math.random() * (max - min + 1)) + min;
+		}
+        
+        function setMessageEachPosition() {
+        	var msgtbody = document.getElementById("msgTbody") ;
+	        // 6칸짜리 배열 : n칸으로 생각해야한다 페이지마다 편지갯수가 다를수있으니
+	        var letterArr = msgtbody.children ;
+        	
+        	//console.log(document.querySelector("p").innerText) ;
+        	console.log(document.querySelectorAll("a")[ 0 ].href.split("=")[ 1 ]);
+        	console.log(document.querySelectorAll("a")[ 0 ].href);
+        	if ( letterArr.length < 6 ) {
+        		document.getElementById("goNext").style.display = "none" ;
+        	} else if ( letterArr.length == 6 && document.querySelector("p").innerText - (document.querySelectorAll("a")[1].href.split("=")[1] * 6) == 0 ) {
+        		document.getElementById("goNext").style.display = "none" ;
+        	}
+        	
+        	if ( document.querySelectorAll("a")[ 1 ].href.split("=")[ 1 ] == 1 ) {
+        		document.getElementById("goPre").style.display = "none" ;
+        	}
+        	
+	        // 6칸짜리 배열
+	        var boxArr = document.getElementsByClassName("letters") ;
+	        
+	        for ( var i = 0 ; i < letterArr.length ; i++ ) {
+	        	
+	        	var letterArrArr = letterArr[ i ].children ;
+	        	var boxArrArr = boxArr[ i ].children ;
+	        	
+	        	boxArrArr[ 1 ].src = `/resources/images/deco${ random( 1 , 13 ) }.png` ;
+	        	for ( var k = 1 ; k <= 2 ; k++ ) {
+	        		boxArrArr[ 0 ].innerText = letterArrArr[ 0 ].innerText ;
+	        		boxArrArr[ k + 1 ].innerText = letterArrArr[ k - 1 ].innerText ;
+	        	}
+	        }
+	        msgtbody.parentNode.style.display = "none";
+	        
+	        for ( var j = 0 ; j < 6 ; j++ ) {
+	        	
+	        	if ( boxArr[ j ].children[ 2 ].innerText == "" ) {
+	        		boxArr[ j ].children[ 0 ].style.display = "none";
+	        		boxArr[ j ].children[ 1 ].style.display = "none";
+	        	};
+	        	
+	        }
+	        
+        }
+        
+        setMessageEachPosition() ;
+        
+        
+        
+        function openLetter(ele) {
+        	if ( ele.children[ 1 ].src == "" ) return false ;
+			        	
+        	let today = new Date();   
+        	let month = today.getMonth() + 1;  // 월
+        	let date = today.getDate();  // 날짜
+        	let day = today.getDay();  // 요일
+        	
+        	if ( month != 12 || date != 25 ) {
+        		
+        		window.alert(" 아직 편지를 볼수 없어요 ! 12월 25일에 OPEN !! ") ;
+        		
+        		return false ;
+        	}
+        	
+        	var title = 2 , content = 3 ;
+        	var eleArr = ele.children ;
+
+        	var te = document.getElementById("modalLetterPaper");
+        	te.style.display = "block" ;
+ 			te.style.width = "450px";
+        	te.style.height = "500px";
+        	te.style.margin = "0 auto" ;
+        	te.style.borderRadius = "20px" ;
+        	te.style.textAlign = "center" ;
+        	te.style.paddingTop = "20px" ;
+        	te.style.backgroundColor = "green";
+        	te.style.position = "absolute";
+        	te.style.top = "50%";
+        	te.style.left = "50%";
+        	te.style.transform = "translate(-50%,-50%)";
+        	
+        	var techild = te.children ;
+        	techild[ 0 ].value = eleArr[ title ].innerText ;
+        	techild[ 1 ].innerText = eleArr[ content ].innerText ;
+        	
+        }
+        openLetter() ;
+        
+        function closeModalLetterPaper(ele) {
+        	ele.parentNode.style.display = "none" ;
+        }
+        
+    </script>
+</body>
+
+</html>
