@@ -104,6 +104,6 @@
 </br>
 
 2. 페이지별 기능 및 시연 영상 </br>
-🎞️ <a href="https://www.youtube.com/watch?v=CKm0IJFkW5M](https://www.youtube.com/watch?v=iO9GlcErjBk)](https://www.youtube.com/watch?v=iO9GlcErjBk)">프로젝트 발표 영상</a> </br>
-🎠 <a href="https://relic-payment-6b2.notion.site/JSP-SHINNA-HOTEL-307e62744b774292b9136e4a81c8a070](https://relic-payment-6b2.notion.site/SpringBoot-LetterOfHeart-c780ad69c8bf4429a6ffcdc67aae02d4)">페이지별 기능</a> </br>
+🎞️ <a href="https://www.youtube.com/watch?v=iO9GlcErjBk">프로젝트 발표 영상</a> </br>
+🎠 <a href="https://relic-payment-6b2.notion.site/SpringBoot-LetterOfHeart-c780ad69c8bf4429a6ffcdc67aae02d4">페이지별 기능</a> </br>
 
